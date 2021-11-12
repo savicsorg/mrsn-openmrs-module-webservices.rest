@@ -42,7 +42,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Resource(name = RestConstants.VERSION_1 + "/module", supportedClass = Module.class, supportedOpenmrsVersions = { "1.8.*",
-        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class ModuleResource1_8 extends BaseDelegatingReadableResource<Module> implements Uploadable {
 	
 	private ModuleFactoryWrapper moduleFactoryWrapper = new ModuleFactoryWrapper();
@@ -222,11 +222,9 @@ public class ModuleResource1_8 extends BaseDelegatingReadableResource<Module> im
 	private void findAndThrowStartupErrors(Collection<Module> modules) {
 		List<Exception> errors = new ArrayList<Exception>();
 		for (Module module : modules) {
-			if (moduleFactoryWrapper.isModuleStopped(module)) {
+			if (moduleFactoryWrapper.isModuleStopped(module) && module.getStartupErrorMessage() != null) {
 				//module actions are executed in other thread, so we need to explicitly check and throw them
-				if (module.getStartupErrorMessage() != null) {
-					errors.add(new ModuleException(module.getStartupErrorMessage()));
-				}
+				errors.add(new ModuleException(module.getStartupErrorMessage()));
 			}
 		}
 		

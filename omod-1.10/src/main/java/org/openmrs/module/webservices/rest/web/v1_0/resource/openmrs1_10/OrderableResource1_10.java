@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import io.swagger.models.Model;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptName;
 import org.openmrs.ConceptSearchResult;
@@ -43,7 +42,7 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
  * orderable. It returns ConceptSearchResults instead of Concepts
  */
 @Resource(name = RestConstants.VERSION_1 + "/orderable", supportedClass = ConceptSearchResult.class, supportedOpenmrsVersions = {
-        "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class OrderableResource1_10 extends BaseDelegatingResource<ConceptSearchResult> implements Searchable {
 	
 	/**
@@ -136,7 +135,7 @@ public class OrderableResource1_10 extends BaseDelegatingResource<ConceptSearchR
 		
 		List<ConceptClass> conceptClasses = new ArrayList<ConceptClass>();
 		
-		if (orderTypes == null | orderTypes.isEmpty())
+		if (orderTypes == null || orderTypes.isEmpty())
 			return conceptClasses;
 		
 		for (int i = 0; i < orderTypes.size(); i++) {

@@ -12,7 +12,10 @@ package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs2_2;
 
 import org.openmrs.Order;
 
-public class FulfillerDetails {
+/**
+ * Backing object for FulfillerDetailsResource2_2
+ */
+public class FulfillerDetails2_2 {
 	
 	private Order.FulfillerStatus fulfillerStatus;
 	
@@ -20,7 +23,7 @@ public class FulfillerDetails {
 	
 	private Order order;
 	
-	public FulfillerDetails() {
+	public FulfillerDetails2_2() {
 		
 	}
 	

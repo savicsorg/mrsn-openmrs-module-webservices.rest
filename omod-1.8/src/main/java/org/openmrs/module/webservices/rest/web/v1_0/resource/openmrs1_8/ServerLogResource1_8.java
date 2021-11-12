@@ -13,6 +13,7 @@ import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.MapProperty;
 import org.openmrs.module.webservices.helper.ServerLogActionWrapper;
+import org.openmrs.module.webservices.helper.ServerLogActionWrapper1_8;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -27,10 +28,10 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
  * {@link Resource} for ServerLogController, supporting standard CRUD operations
  */
 @Resource(name = RestConstants.VERSION_1 + "/serverlog", supportedClass = ServerLogActionWrapper.class, supportedOpenmrsVersions = {
-        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*" })
 public class ServerLogResource1_8 extends BaseDelegatingResource<ServerLogActionWrapper> implements Listable {
 	
-	private ServerLogActionWrapper serverLogActionWrapper = new ServerLogActionWrapper();
+	private ServerLogActionWrapper serverLogActionWrapper = new ServerLogActionWrapper1_8();
 	
 	public void setServerLogActionWrapper(ServerLogActionWrapper serverLogActionWrapper) {
 		this.serverLogActionWrapper = serverLogActionWrapper;
@@ -61,7 +62,7 @@ public class ServerLogResource1_8 extends BaseDelegatingResource<ServerLogAction
 	
 	@Override
 	public ServerLogActionWrapper newDelegate() {
-		return new ServerLogActionWrapper();
+		return new ServerLogActionWrapper1_8();
 	}
 	
 	@Override

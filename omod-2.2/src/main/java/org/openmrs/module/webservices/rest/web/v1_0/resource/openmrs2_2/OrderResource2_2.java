@@ -12,14 +12,13 @@ package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs2_2;
 import org.openmrs.Order;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
-import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_10.OrderResource1_10;
 
 @Resource(name = RestConstants.VERSION_1 + "/order", supportedClass = Order.class, supportedOpenmrsVersions = { "2.2.*",
-        "2.3.*", "2.4.*" })
+        "2.3.*", "2.4.*", "2.5.*" })
 public class OrderResource2_2 extends OrderResource1_10 {
 	
 	/**

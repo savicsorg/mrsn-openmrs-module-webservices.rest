@@ -15,7 +15,6 @@ import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.annotation.PropertySetter;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
-import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource;
@@ -26,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Resource(name = RestConstants.VERSION_1 + "/concept", supportedClass = Concept.class, supportedOpenmrsVersions = { "2.0.*",
-        "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class ConceptResource2_0 extends ConceptResource1_11 {
 	
 	/**

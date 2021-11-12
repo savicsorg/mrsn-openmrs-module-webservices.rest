@@ -55,7 +55,7 @@ import io.swagger.models.properties.StringProperty;
  * {@link Resource} for {@link Visit}, supporting standard CRUD operations
  */
 @Resource(name = RestConstants.VERSION_1 + "/visit", supportedClass = Visit.class, supportedOpenmrsVersions = { "1.9.*",
-        "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class VisitResource1_9 extends DataDelegatingCrudResource<Visit> {
 	
 	/**
@@ -123,7 +123,7 @@ public class VisitResource1_9 extends DataDelegatingCrudResource<Visit> {
 	@PropertyGetter("encounters")
 	public Collection<Encounter> getNonVoidedEncounters(Visit visit) {
 		Set<Encounter> allEncounters = visit.getEncounters();
-		if (allEncounters != null && allEncounters.size() > 0) {
+		if (allEncounters != null && !allEncounters.isEmpty()) {
 			Iterator<Encounter> encounterIterator = allEncounters.iterator();
 			while (encounterIterator.hasNext()) {
 				Encounter next = encounterIterator.next();
@@ -236,7 +236,7 @@ public class VisitResource1_9 extends DataDelegatingCrudResource<Visit> {
 			propertiesToCreate.add("startDatetime", new Date());
 		}
 		return super.create(propertiesToCreate, context);
-	};
+	}
 	
 	/**
 	 * @see DelegatingCrudResource#save(java.lang.Object)

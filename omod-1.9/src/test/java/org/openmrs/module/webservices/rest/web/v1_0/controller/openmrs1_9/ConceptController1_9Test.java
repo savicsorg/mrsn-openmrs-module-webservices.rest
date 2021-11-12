@@ -24,8 +24,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Tests functionality of {@link ConceptController}. This does not use @should annotations because
- * the controller inherits those methods from a subclass
+ * Tests functionality of {@link ConceptController}.
  */
 public class ConceptController1_9Test extends MainResourceControllerTest {
 	
@@ -58,7 +57,7 @@ public class ConceptController1_9Test extends MainResourceControllerTest {
 		SimpleObject response = deserialize(handle(newGetRequest(getURI(), new Parameter("term", "SSTRM-WGT234"))));
 		List<Object> results = Util.getResultsList(response);
 		
-		Assert.assertEquals(results.size(), 1);
+		Assert.assertEquals(1, results.size());
 		Object next = results.iterator().next();
 		Assert.assertThat((String) PropertyUtils.getProperty(next, "uuid"), is("c607c80f-1ea9-4da3-bb88-6276ce8868dd"));
 	}
@@ -70,7 +69,7 @@ public class ConceptController1_9Test extends MainResourceControllerTest {
 		        "full"))));
 		List<Object> results = Util.getResultsList(response);
 		
-		Assert.assertEquals(results.size(), 1);
+		Assert.assertEquals(1, results.size());
 		Object next = results.iterator().next();
 		Assert.assertThat((String) PropertyUtils.getProperty(next, "uuid"), is("568b58c8-e878-11e0-950d-00248140a5e3"));
 	}

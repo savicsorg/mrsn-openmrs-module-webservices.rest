@@ -14,30 +14,27 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResourceTest;
 import org.openmrs.module.webservices.rest.web.v1_0.RestTestConstants2_2;
 
-import static org.junit.Assert.assertThat;
-import static org.openmrs.module.webservices.rest.test.LinkMatcher.hasLink;
+public class FulfillerDetailsResource2_2Test extends BaseDelegatingResourceTest<FulfillerDetailsResource2_2, FulfillerDetails2_2> {
 
-public class FulfillerDetailsResource2_2Test extends BaseDelegatingResourceTest<FulfillerDetailsResource2_2, FulfillerDetails> {
-	
 	private String fulfillerComment = "Some example comment";
-	
+
 	private Order.FulfillerStatus fulfillerStatus = Order.FulfillerStatus.RECEIVED;
-	
+
 	/**
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResourceTest#newObject()
 	 */
 	@Override
-	public FulfillerDetails newObject() {
-		
+	public FulfillerDetails2_2 newObject() {
+
 		Order order = Context.getOrderService().getOrderByUuid(RestTestConstants2_2.ORDER_UUID);
-		FulfillerDetails fillerDetailsRepresentation = new FulfillerDetails();
+		FulfillerDetails2_2 fillerDetailsRepresentation = new FulfillerDetails2_2();
 		fillerDetailsRepresentation.setOrder(order);
 		fillerDetailsRepresentation.setFulfillerComment(fulfillerComment);
 		fillerDetailsRepresentation.setFulfillerStatus(fulfillerStatus);
-		
+
 		return fillerDetailsRepresentation;
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResourceTest#validateDefaultRepresentation()
 	 */
@@ -46,7 +43,7 @@ public class FulfillerDetailsResource2_2Test extends BaseDelegatingResourceTest<
 		assertPropEquals("fulfillerStatus", fulfillerStatus);
 		assertPropEquals("fulfillerComment", fulfillerComment);
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResourceTest#validateFullRepresentation()
 	 */
@@ -54,7 +51,7 @@ public class FulfillerDetailsResource2_2Test extends BaseDelegatingResourceTest<
 		assertPropEquals("fulfillerStatus", fulfillerStatus);
 		assertPropEquals("fulfillerComment", fulfillerComment);
 	}
-	
+
 	/**
 	 * @see BaseDelegatingResourceTest#validateRefRepresentation()
 	 */
@@ -62,12 +59,12 @@ public class FulfillerDetailsResource2_2Test extends BaseDelegatingResourceTest<
 		assertPropEquals("fulfillerStatus", fulfillerStatus);
 		assertPropEquals("fulfillerComment", fulfillerComment);
 	}
-	
+
 	@Override
 	public String getDisplayProperty() {
 		return null;
 	}
-	
+
 	@Override
 	public String getUuidProperty() {
 		return null;

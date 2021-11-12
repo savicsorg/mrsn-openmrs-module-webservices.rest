@@ -9,7 +9,6 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.RefProperty;
@@ -40,7 +39,7 @@ import java.util.List;
  * {@link Resource} for {@link ConceptReferenceTerm}, supporting standard CRUD operations
  */
 @Resource(name = RestConstants.VERSION_1 + "/conceptreferenceterm", supportedClass = ConceptReferenceTerm.class, supportedOpenmrsVersions = {
-        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class ConceptReferenceTermResource1_9 extends MetadataDelegatingCrudResource<ConceptReferenceTerm> {
 	
 	/**

@@ -44,13 +44,8 @@ import java.util.List;
  * {@link Resource} for PatientState, supporting standard CRUD operations
  */
 @SubResource(parent = ProgramEnrollmentResource1_8.class, path = "state", supportedClass = PatientState.class, supportedOpenmrsVersions = {
-        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class PatientStateResource1_8 extends DelegatingSubResource<PatientState, PatientProgram, ProgramEnrollmentResource1_8> {
-	
-	@Override
-	public String getUri(Object instance) {
-		return super.getUri(instance);
-	}
 	
 	@Override
 	public PatientProgram getParent(PatientState instance) {
@@ -90,7 +85,7 @@ public class PatientStateResource1_8 extends DelegatingSubResource<PatientState,
 	private PatientState getLastPatientState(ProgramWorkflow currentWorkflow, PatientProgram patientProgram) {
 		List<PatientState> patientStates = new ArrayList<PatientState>(patientProgram.statesInWorkflow(currentWorkflow,
 		    false));
-		if (patientStates.size() > 0) {
+		if (!patientStates.isEmpty()) {
 			sortPatientStatesBasedOnStartDate(patientStates);
 			return patientStates.get(patientStates.size() - 1);
 		} else {

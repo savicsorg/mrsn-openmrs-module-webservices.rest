@@ -35,7 +35,7 @@ import io.swagger.models.properties.RefProperty;
 import io.swagger.models.properties.StringProperty;
 
 @Resource(name = RestConstants.VERSION_1 + "/ordergroup", supportedClass = OrderGroup.class, supportedOpenmrsVersions = {
-        "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class OrderGroupResource1_12 extends DataDelegatingCrudResource<OrderGroup> {
 	
 	@Override
@@ -128,6 +128,7 @@ public class OrderGroupResource1_12 extends DataDelegatingCrudResource<OrderGrou
 		return description;
 	}
 	
+	@Override
 	public Model getGETModel(Representation rep) {
 		ModelImpl modelImpl = (ModelImpl) super.getGETModel(rep);
 		if (rep instanceof DefaultRepresentation) {
@@ -154,18 +155,16 @@ public class OrderGroupResource1_12 extends DataDelegatingCrudResource<OrderGrou
 	
 	@Override
 	public Model getCREATEModel(Representation representation) {
-		ModelImpl model = new ModelImpl().property("patient", new StringProperty().example("uuid"))
+		return new ModelImpl().property("patient", new StringProperty().example("uuid"))
 		        .property("encounter", new StringProperty().example("uuid"))
 		        .property("orders", new ArrayProperty(new RefProperty("#/definitions/OrderCreate")))
 		        .property("orderSet", new StringProperty().example("uuid"));
-		return model;
 	}
 	
 	@Override
 	public Model getUPDATEModel(Representation rep) {
-		ModelImpl model = new ModelImpl().property("orders",
+		return new ModelImpl().property("orders",
 		    new ArrayProperty(new RefProperty("#/definitions/OrderCreate")));
-		return model;
 	}
 	
 	@PropertyGetter("display")

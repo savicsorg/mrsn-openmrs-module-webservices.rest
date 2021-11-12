@@ -40,7 +40,7 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9.PatientResource1_9;
 
 @SubResource(parent = PatientResource1_9.class, path = "allergy", supportedClass = Allergy.class, supportedOpenmrsVersions = {
-        "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class PatientAllergyResource2_0 extends DelegatingSubResource<Allergy, Patient, PatientResource1_9> {
 	
 	@Override
@@ -156,9 +156,9 @@ public class PatientAllergyResource2_0 extends DelegatingSubResource<Allergy, Pa
 	/**
 	 * @see org.openmrs.module.webservices.rest.web.resource.api.SubResource#doGetAll(java.lang.Object,
 	 *      org.openmrs.module.webservices.rest.web.RequestContext)
-	 * @should return 404 status if Allergy Status is UNKNOWN
-	 * @should return empty list if Allergy Status is NO_KNOWN_ALLERGIES
-	 * @should throw new ResourceDoesNotSupportOperationException if patient is null
+	 * <strong>Should</strong> return 404 status if Allergy Status is UNKNOWN
+	 * <strong>Should</strong> return empty list if Allergy Status is NO_KNOWN_ALLERGIES
+	 * <strong>Should</strong> throw new ResourceDoesNotSupportOperationException if patient is null
 	 */
 	@Override
 	public NeedsPaging<Allergy> doGetAll(Patient parent, RequestContext context) throws ResponseException {
@@ -285,9 +285,9 @@ public class PatientAllergyResource2_0 extends DelegatingSubResource<Allergy, Pa
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingSubResourcep
 	 *      [ut(java.lang.String, SimpleObject, RequestContext) PUT /patient/{patient_uuid}/allergy
 	 *      sets allergyStatus of patient to Allergies.NO_KNOWN_ALLERGIES
-	 * @should throw new ObjectNotFoundException if patient does not exist
-	 * @should throw new ResourceDoesNotSupportOperationException if post body is not empty
-	 * @should throw new ResourceDoesNotSupportOperationException if patient has any allergies
+	 * <strong>Should</strong> throw new ObjectNotFoundException if patient does not exist
+	 * <strong>Should</strong> throw new ResourceDoesNotSupportOperationException if post body is not empty
+	 * <strong>Should</strong> throw new ResourceDoesNotSupportOperationException if patient has any allergies
 	 */
 	@Override
 	public void put(String parentUniqueId, SimpleObject post, RequestContext context) throws ResponseException {
@@ -302,7 +302,7 @@ public class PatientAllergyResource2_0 extends DelegatingSubResource<Allergy, Pa
 		}
 		
 		Allergies allergies = Context.getPatientService().getAllergies(patient);
-		if (allergies.size() != 0) {
+		if (!allergies.isEmpty()) {
 			// not allowed unless patient has no allergies
 			throw new ResourceDoesNotSupportOperationException();
 		}

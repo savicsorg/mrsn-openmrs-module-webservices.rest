@@ -50,7 +50,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Resource(name = RestConstants.VERSION_1 + "/moduleaction", supportedClass = ModuleAction.class, supportedOpenmrsVersions = {
-        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.8.*", "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class ModuleActionResource1_8 extends BaseDelegatingResource<ModuleAction> implements Creatable {
 	
 	/**
@@ -163,7 +163,7 @@ public class ModuleActionResource1_8 extends BaseDelegatingResource<ModuleAction
 			moduleFile = ModuleUtil.insertModuleFile(inputStream, fileName);
 			tempModule = moduleFactoryWrapper.loadModule(moduleFile);
 			moduleFactoryWrapper.startModule(tempModule, servletContext);
-			if (existingModule != null && dependentModulesStopped.size() > 0
+			if (existingModule != null && !dependentModulesStopped.isEmpty()
 			        && moduleFactoryWrapper.isModuleStarted(tempModule)) {
 				startModules(dependentModulesStopped, servletContext);
 			}
@@ -243,11 +243,9 @@ public class ModuleActionResource1_8 extends BaseDelegatingResource<ModuleAction
 	private void findAndThrowStartupErrors(Collection<Module> modules) {
 		List<Exception> errors = new ArrayList<Exception>();
 		for (Module module : modules) {
-			if (moduleFactoryWrapper.isModuleStopped(module)) {
+			if (moduleFactoryWrapper.isModuleStopped(module) && module.getStartupErrorMessage() != null) {
 				//module actions are executed in other thread, so we need to explicitly check and throw them
-				if (module.getStartupErrorMessage() != null) {
-					errors.add(new ModuleException(module.getStartupErrorMessage()));
-				}
+				errors.add(new ModuleException(module.getStartupErrorMessage()));
 			}
 		}
 		

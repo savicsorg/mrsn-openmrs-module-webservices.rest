@@ -17,14 +17,13 @@ import org.openmrs.module.webservices.rest.web.representation.FullRepresentation
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
-import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_11.PersonResource1_11;
 
 /**
  * {@link Resource} for Person, supporting standard CRUD operations
  */
 @Resource(name = RestConstants.VERSION_1 + "/person", supportedClass = Person.class, supportedOpenmrsVersions = {
-        "2.2.*", "2.3.*", "2.4.*" })
+        "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class PersonResource2_2 extends PersonResource1_11 {
 	
 	/**
@@ -46,6 +45,16 @@ public class PersonResource2_2 extends PersonResource1_11 {
 	@Override
 	public DelegatingResourceDescription getCreatableProperties() {
 		DelegatingResourceDescription description = super.getCreatableProperties();
+		description.addProperty("causeOfDeathNonCoded");
+		return description;
+	}
+
+	/**
+	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getUpdatableProperties()
+	 */
+	@Override
+	public DelegatingResourceDescription getUpdatableProperties() {
+		DelegatingResourceDescription description = super.getUpdatableProperties();
 		description.addProperty("causeOfDeathNonCoded");
 		return description;
 	}

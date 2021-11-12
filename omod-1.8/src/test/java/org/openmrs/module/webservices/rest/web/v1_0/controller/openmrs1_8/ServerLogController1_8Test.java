@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.openmrs.api.APIException;
 import org.openmrs.module.webservices.helper.ServerLogActionWrapper;
+import org.openmrs.module.webservices.helper.ServerLogActionWrapper1_8;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.MockServerLogActionWrapper;
 import org.openmrs.module.webservices.rest.web.api.RestService;
@@ -30,55 +30,56 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ServerLogController1_8Test extends MainResourceControllerTest {
-	
+
 	@Autowired
-	RestService restService;
-	
-	private String log1 = "INFO - Simple.appender(115) |2018-03-03 15:44:54,834| Info Message";
-	
-	private String log2 = "ERROR - Simple.appender(115) |2018-03-03 15:44:54,834| Info Message";
-	
-	private MockServerLogActionWrapper mockServerLogActionWrapper = new MockServerLogActionWrapper();
-	
+	private RestService restService;
+
+	private static final String log1 = "INFO - Simple.appender(115) |2018-03-03 15:44:54,834| Info Message";
+
+	private static final String log2 = "ERROR - Simple.appender(115) |2018-03-03 15:44:54,834| Info Message";
+
+	private final MockServerLogActionWrapper<ServerLogActionWrapper1_8> mockServerLogActionWrapper = new MockServerLogActionWrapper<ServerLogActionWrapper1_8>(
+			new ServerLogActionWrapper1_8());
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
-	
+
 	@Before
 	public void setUp() {
 		ServerLogResource1_8 serverLogResource1_8 = (ServerLogResource1_8) restService
-		        .getResourceBySupportedClass(ServerLogActionWrapper.class);
+				.getResourceBySupportedClass(ServerLogActionWrapper.class);
 		serverLogResource1_8.setServerLogActionWrapper(mockServerLogActionWrapper);
 	}
-	
+
 	@Test(expected = Exception.class)
 	public void save_shouldFailOnSave() throws Exception {
 		MockHttpServletRequest req = request(RequestMethod.POST, getURI());
 		SimpleObject resultLogs = deserialize(handle(req));
 	}
-	
+
 	@Test(expected = Exception.class)
 	public void delete_shouldFailOnDelete() throws Exception {
 		MockHttpServletRequest req = request(RequestMethod.DELETE, getURI());
 		SimpleObject resultLogs = deserialize(handle(req));
 	}
-	
+
 	@Test
 	@Override
 	public void shouldGetAll() throws Exception {
 		//sanity check
 		List<String[]> mockServerLogs = mockServerLogActionWrapper.getServerLogs();
-		Assert.assertEquals(mockServerLogs.size(), 0);
-		
+		Assert.assertEquals(0, mockServerLogs.size());
+
 		mockServerLogActionWrapper.mockMemoryAppenderBuffer.addAll(Arrays.asList(log1, log2));
-		
+
 		SimpleObject response = deserialize(handle(newGetRequest(getURI())));
 		ArrayList<String[]> results = response.get("serverLog");
 		Assert.assertNotNull(results);
 		Assert.assertEquals(results.size(), getAllCount());
-		
+
 		Assert.assertEquals(mockServerLogActionWrapper.getServerLogs().size(), getAllCount());
 	}
-	
+
 	@Test(expected = Exception.class)
 	@Override
 	public void shouldGetFullByUuid() throws Exception {
@@ -86,7 +87,7 @@ public class ServerLogController1_8Test extends MainResourceControllerTest {
 		req.addParameter("v", "full");
 		handle(req);
 	}
-	
+
 	@Test(expected = Exception.class)
 	@Override
 	public void shouldGetDefaultByUuid() throws Exception {
@@ -94,7 +95,7 @@ public class ServerLogController1_8Test extends MainResourceControllerTest {
 		req.addParameter("v", "full");
 		handle(req);
 	}
-	
+
 	@Test(expected = Exception.class)
 	@Override
 	public void shouldGetRefByUuid() throws Exception {
@@ -102,17 +103,17 @@ public class ServerLogController1_8Test extends MainResourceControllerTest {
 		req.addParameter("v", "ref");
 		handle(req);
 	}
-	
+
 	@Override
 	public String getURI() {
 		return "serverlog";
 	}
-	
+
 	@Override
 	public String getUuid() {
 		return "log1";
 	}
-	
+
 	@Override
 	public long getAllCount() {
 		return mockServerLogActionWrapper.mockMemoryAppenderBuffer.size();

@@ -23,11 +23,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.StringProperty;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -60,6 +55,12 @@ import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOp
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
+
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.ObjectProperty;
+import io.swagger.models.properties.StringProperty;
 
 /**
  * A base implementation of a resource or sub-resource that delegates operations to a wrapped
@@ -364,9 +365,9 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 	 * 
 	 * @param representation
 	 * @return
-	 * @should return valid RefRepresentation
-	 * @should return valid DefaultRepresentation
-	 * @should return valid FullRepresentation
+	 * <strong>Should</strong> return valid RefRepresentation
+	 * <strong>Should</strong> return valid DefaultRepresentation
+	 * <strong>Should</strong> return valid FullRepresentation
 	 */
 	@Override
 	public SimpleObject asRepresentation(T delegate, Representation representation) throws ConversionException {
@@ -411,9 +412,7 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 		if (representation instanceof CustomRepresentation) {
 			repDescription = getCustomRepresentationDescription((CustomRepresentation) representation);
 			if (repDescription != null) {
-				SimpleObject simple = convertDelegateToRepresentation(delegate, repDescription);
-				
-				return simple;
+				return convertDelegateToRepresentation(delegate, repDescription);
 			}
 		}
 		
@@ -422,7 +421,7 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 	}
 	
 	/**
-	 * @should return delegating resource description
+	 * <strong>Should</strong> return delegating resource description
 	 */
 	private DelegatingResourceDescription getCustomRepresentationDescription(CustomRepresentation representation) {
 		DelegatingResourceDescription desc = new DelegatingResourceDescription();
@@ -642,7 +641,7 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 	 * @param description
 	 * @param mustIncludeRequiredProperties
 	 * @throws ResponseException
-	 * @should allow setting a null value
+	 * <strong>Should</strong> allow setting a null value
 	 */
 	public void setConvertedProperties(T delegate, Map<String, Object> propertyMap,
 	        DelegatingResourceDescription description, boolean mustIncludeRequiredProperties) throws ConversionException {
@@ -725,13 +724,9 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 	private Method findAnnotatedMethodForRepresentation(Class<?> clazz, Representation rep) {
 		for (Method method : clazz.getMethods()) {
 			RepHandler ann = method.getAnnotation(RepHandler.class);
-			if (ann != null) {
-				if (ann.value().isAssignableFrom(rep.getClass())) {
-					if (!(rep instanceof NamedRepresentation)) {
-						return method;
-					} else if (ann.name().equals(rep.getRepresentation())) {
-						return method;
-					}
+			if (ann != null && ann.value().isAssignableFrom(rep.getClass())) {
+				if (!(rep instanceof NamedRepresentation) || ann.name().equals(rep.getRepresentation())) {
+					return method;
 				}
 			}
 		}
@@ -836,8 +831,7 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 		if (handler == null)
 			return null;
 		try {
-			Method method = handler.getClass().getMethod(methodName, argumentTypes);
-			return method;
+			return handler.getClass().getMethod(methodName, argumentTypes);
 		}
 		catch (Exception e) {
 			return null;
@@ -903,8 +897,7 @@ public abstract class BaseDelegatingResource<T> extends BaseDelegatingConverter<
 	 */
 	@Deprecated
 	protected Method findMethod(String name) {
-		Method ret = ReflectionUtil.findMethod(getClass(), name);
-		return ret;
+		return ReflectionUtil.findMethod(getClass(), name);
 	}
 	
 	/**

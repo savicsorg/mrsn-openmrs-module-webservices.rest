@@ -354,7 +354,7 @@ public class ObsResource1_8 extends DataDelegatingCrudResource<Obs> implements U
 	 */
 	@PropertyGetter("groupMembers")
 	public static Object getGroupMembers(Obs obs) throws ConversionException {
-		if (obs.getGroupMembers() != null && obs.getGroupMembers().size() > 0) {
+		if (obs.getGroupMembers() != null && !obs.getGroupMembers().isEmpty()) {
 			return obs.getGroupMembers();
 		}
 		return null;
@@ -378,11 +378,11 @@ public class ObsResource1_8 extends DataDelegatingCrudResource<Obs> implements U
 	 * @param value
 	 * @throws ParseException
 	 * @throws ConversionException
-	 * @should return uuid for foncept true
-	 * @should return uuid for concept false
-	 * @should throw exception on unexpected value
-	 * @should return uuid for primitive true
-	 * @should return uuid for primitive false
+	 * <strong>Should</strong> return uuid for foncept true
+	 * <strong>Should</strong> return uuid for concept false
+	 * <strong>Should</strong> throw exception on unexpected value
+	 * <strong>Should</strong> return uuid for primitive true
+	 * <strong>Should</strong> return uuid for primitive false
 	 */
 	@PropertySetter("value")
 	public static void setValue(Obs obs, Object value) throws ParseException, ConversionException, IOException {
@@ -466,8 +466,9 @@ public class ObsResource1_8 extends DataDelegatingCrudResource<Obs> implements U
 				}
 				obs.setValueAsString(value.toString());
 			}
-		} else
+		} else {
 			throw new APIException("The value for an observation cannot be null");
+		}
 	}
 	
 	/**
@@ -525,8 +526,7 @@ public class ObsResource1_8 extends DataDelegatingCrudResource<Obs> implements U
 		
 		obs = obsService.saveObs(obs, null);
 		
-		SimpleObject ret = (SimpleObject) ConversionUtil.convertToRepresentation(obs, Representation.DEFAULT);
-		return ret;
+		return (SimpleObject) ConversionUtil.convertToRepresentation(obs, Representation.DEFAULT);
 	}
 	
 }

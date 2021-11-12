@@ -9,12 +9,9 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_12;
 
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.ObjectProperty;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openmrs.OrderSet;
 import org.openmrs.OrderSetMember;
 import org.openmrs.api.context.Context;
@@ -33,14 +30,18 @@ import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingSubResour
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.models.Model;
+import io.swagger.models.ModelImpl;
+import io.swagger.models.properties.BooleanProperty;
+import io.swagger.models.properties.ObjectProperty;
+import io.swagger.models.properties.RefProperty;
+import io.swagger.models.properties.StringProperty;
 
 /**
  * {@link Resource} for OrderSetMembers, supporting standard CRUD operations
  */
 @SubResource(parent = OrderSetResource1_12.class, path = "ordersetmember", supportedClass = OrderSetMember.class, supportedOpenmrsVersions = {
-        "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*" })
+        "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*" })
 public class OrderSetMemberResource1_12 extends DelegatingSubResource<OrderSetMember, OrderSet, OrderSetResource1_12> {
 	
 	@Override
@@ -100,8 +101,7 @@ public class OrderSetMemberResource1_12 extends DelegatingSubResource<OrderSetMe
 	 */
 	@Override
 	public DelegatingResourceDescription getUpdatableProperties() {
-		DelegatingResourceDescription creatableProperties = getCreatableProperties();
-		return creatableProperties;
+		return getCreatableProperties();
 	}
 	
 	@Override
